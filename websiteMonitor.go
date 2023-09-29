@@ -30,6 +30,7 @@ func main()  {
 			iniciarMonitoramento()
 		case 2:
 			fmt.Println("Exibindo logs....")
+			imprimirLogs()
 		case 0: 
 			fmt.Println("Saindo do programa.")
 			//Exit da biblioteca os serve para sair do programa
@@ -60,7 +61,7 @@ func exibeMenu()  {
 func lerComando() int {
 	var comandoLido int
 	fmt.Scan(&comandoLido)
-	fmt.Println("O comando escolhido foi", &comandoLido)
+	fmt.Println("O comando escolhido foi", comandoLido)
 	fmt.Println("")
 
 	return comandoLido
@@ -135,4 +136,15 @@ func registraLog(site string, status bool)  {
 	arquivo.WriteString( time.Now().Format("02/01/2006 15:04:05") + "-" + site + " - online:" + strconv.FormatBool(status) + "\n")
 
 	arquivo.Close()
+}
+
+func imprimirLogs() {
+	arquivo, err := os.ReadFile("log.txt")
+
+	if err != nil {
+		fmt.Println("Erro ao ler o arquivo de log:", err)
+	}
+
+	fmt.Println("Logs:")
+	fmt.Println(string(arquivo))
 }
